@@ -6,6 +6,9 @@ Uma aplicação web moderna e interativa para simulações de apostas esportivas
 ![Tecnologia](https://img.shields.io/badge/Tech-Vanilla_JS-yellow)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
 
+![Preview1](preview1.png)
+![Preview2](preview2.png)
+
 ## 📋 Descrição do Projeto
 
 Esta aplicação permite analisar o risco e os possíveis resultados de estratégias de apostas esportivas através de simulações Monte Carlo. O usuário pode configurar diversos parâmetros e visualizar estatísticas detalhadas e gráficos interativos dos resultados.
