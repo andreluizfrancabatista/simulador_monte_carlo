@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  monte-carlo-app:
+    build: .
+    container_name: monte-carlo-simulator
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    # volumes:
+      # Opcional: descomentar para desenvolvimento com hot-reload
+      # - ./index.html:/usr/share/nginx/html/index.html:ro
+      # - ./styles.css:/usr/share/nginx/html/styles.css:ro
+      # - ./script.js:/usr/share/nginx/html/script.js:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.monte-carlo.rule=Host(`localhost`)"
+      - "traefik.http.services.monte-carlo.loadbalancer.server.port=80"
+    networks:
+      - monte-carlo-network
+
+networks:
+  monte-carlo-network:
+    driver: bridge

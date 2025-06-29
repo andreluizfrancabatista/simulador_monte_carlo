@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Monte Carlo - Apostas Esportivas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎲 Simulador Monte Carlo</h1>
+            <p>Simulação de Apostas Esportivas com Stake Acumulativa</p>
+            <button id="themeToggle" class="theme-toggle">🌙</button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Form Section -->
+            <section class="form-section">
+                <h2>⚙️ Parâmetros da Simulação</h2>
+                <form id="simulationForm" class="simulation-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="stakeInicial">Stake Inicial (R$)</label>
+                            <input type="number" id="stakeInicial" min="1" step="0.01" value="100.00" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="qtdApostas">Apostas por Simulação</label>
+                            <input type="number" id="qtdApostas" min="1" max="1000" value="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="numSimulacoes">Número de Simulações</label>
+                            <input type="number" id="numSimulacoes" min="10" max="10000" value="1000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="chancePerda">Chance de Perda (%)</label>
+                            <input type="number" id="chancePerda" min="0" max="100" step="0.1" value="20" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lucroMin">Taxa Lucro Mín. (%)</label>
+                            <input type="number" id="lucroMin" min="0" max="100" step="0.01" value="6" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lucroMax">Taxa Lucro Máx. (%)</label>
+                            <input type="number" id="lucroMax" min="0" max="100" step="0.01" value="9" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="prejuizoMin">Taxa Prejuízo Mín. (%)</label>
+                            <input type="number" id="prejuizoMin" min="0" max="100" step="0.01" value="10" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="prejuizoMax">Taxa Prejuízo Máx. (%)</label>
+                            <input type="number" id="prejuizoMax" min="0" max="100" step="0.01" value="12" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="runSimulation">
+                        🚀 Executar Simulação
+                    </button>
+                </form>
+                
+                <div id="loadingIndicator" class="loading-indicator hidden">
+                    <div class="spinner"></div>
+                    <p>Executando simulações...</p>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section hidden">
+                <h2>📊 Resultados da Simulação</h2>
+                
+                <!-- Statistics -->
+                <div class="statistics-grid">
+                    <div class="stat-card">
+                        <h3>💰 Capital Final</h3>
+                        <div class="stat-value" id="statMinimo">R$ 0,00</div>
+                        <div class="stat-label">Mínimo</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>🎯 Capital Final</h3>
+                        <div class="stat-value" id="statMaximo">R$ 0,00</div>
+                        <div class="stat-label">Máximo</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>📈 Capital Final</h3>
+                        <div class="stat-value" id="statMedia">R$ 0,00</div>
+                        <div class="stat-label">Média</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>🎯 Capital Final</h3>
+                        <div class="stat-value" id="statMediana">R$ 0,00</div>
+                        <div class="stat-label">Mediana</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>📊 Variabilidade</h3>
+                        <div class="stat-value" id="statDesvio">R$ 0,00</div>
+                        <div class="stat-label">Desvio Padrão</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>✅ Acima da Média</h3>
+                        <div class="stat-value" id="statAcimaMedia">0 (0%)</div>
+                        <div class="stat-label">Simulações</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>📊 Distribuição dos Capitais Finais</h3>
+                        <canvas id="histogramChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-wrapper">
+                        <h3>📈 Evolução do Capital (Todas as Simulações)</h3>
+                        <canvas id="evolutionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Individual Simulation Table -->
+                <div class="table-section">
+                    <button id="showTableBtn" class="btn-secondary">
+                        📋 Mostrar Simulação Individual Detalhada
+                    </button>
+                    
+                    <div id="tableContainer" class="table-container hidden">
+                        <h3>🔍 Simulação Individual Detalhada</h3>
+                        <div class="table-wrapper">
+                            <table id="simulationTable">
+                                <thead>
+                                    <tr>
+                                        <th>Aposta #</th>
+                                        <th>Resultado</th>
+                                        <th>Taxa (%)</th>
+                                        <th>Valor (R$)</th>
+                                        <th>Capital Final (R$)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Desenvolvido com ❤️ para análise de risco em apostas esportivas</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
