@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador Monte Carlo - Apostas Esportivas</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,7 +12,7 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>🎲 Simulador Monte Carlo</h1>
+            <h1>Simulador Monte Carlo</h1>
             <p>Simulação de Apostas Esportivas com Stake Acumulativa</p>
             <button id="themeToggle" class="theme-toggle">🌙</button>
         </header>
@@ -23,6 +24,7 @@
                 <h2>⚙️ Parâmetros da Simulação</h2>
                 <form id="simulationForm" class="simulation-form">
                     <div class="form-grid">
+                        <!-- Primeira linha: 4 campos principais -->
                         <div class="form-group">
                             <label for="stakeInicial">Stake Inicial (R$)</label>
                             <input type="number" id="stakeInicial" min="1" step="0.01" value="100.00" required>
@@ -43,6 +45,7 @@
                             <input type="number" id="chancePerda" min="0" max="100" step="0.1" value="20" required>
                         </div>
                         
+                        <!-- Segunda linha: 4 campos de taxa -->
                         <div class="form-group">
                             <label for="lucroMin">Taxa Lucro Mín. (%)</label>
                             <input type="number" id="lucroMin" min="0" max="100" step="0.01" value="6" required>
@@ -81,40 +84,46 @@
                 
                 <!-- Statistics -->
                 <div class="statistics-grid">
-                    <div class="stat-card">
-                        <h3>💰 Capital Final</h3>
+                    <div class="stat-card worst-case">
+                        <div class="stat-icon">📉</div>
+                        <h3>Pior Cenário</h3>
                         <div class="stat-value" id="statMinimo">R$ 0,00</div>
-                        <div class="stat-label">Mínimo</div>
+                        <div class="stat-label">Capital Final Mínimo</div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>🎯 Capital Final</h3>
+                    <div class="stat-card best-case">
+                        <div class="stat-icon">📈</div>
+                        <h3>Melhor Cenário</h3>
                         <div class="stat-value" id="statMaximo">R$ 0,00</div>
-                        <div class="stat-label">Máximo</div>
+                        <div class="stat-label">Capital Final Máximo</div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>📈 Capital Final</h3>
+                    <div class="stat-card average">
+                        <div class="stat-icon">🎯</div>
+                        <h3>Média</h3>
                         <div class="stat-value" id="statMedia">R$ 0,00</div>
-                        <div class="stat-label">Média</div>
+                        <div class="stat-label">Capital Final Médio</div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>🎯 Capital Final</h3>
+                    <div class="stat-card median">
+                        <div class="stat-icon">📊</div>
+                        <h3>Mediana</h3>
                         <div class="stat-value" id="statMediana">R$ 0,00</div>
-                        <div class="stat-label">Mediana</div>
+                        <div class="stat-label">Capital Final Central</div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>📊 Variabilidade</h3>
+                    <div class="stat-card deviation">
+                        <div class="stat-icon">📏</div>
+                        <h3>Desvio Padrão</h3>
                         <div class="stat-value" id="statDesvio">R$ 0,00</div>
-                        <div class="stat-label">Desvio Padrão</div>
+                        <div class="stat-label">Variabilidade dos Resultados</div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>✅ Acima da Média</h3>
+                    <div class="stat-card success-rate">
+                        <div class="stat-icon">✅</div>
+                        <h3>Acima da Média</h3>
                         <div class="stat-value" id="statAcimaMedia">0 (0%)</div>
-                        <div class="stat-label">Simulações</div>
+                        <div class="stat-label">Simulações com Sucesso</div>
                     </div>
                 </div>
 
