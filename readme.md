@@ -5,6 +5,12 @@ Uma aplicação web moderna e interativa para simulações de apostas esportivas
 ![Demo](https://img.shields.io/badge/Status-Funcionando-brightgreen)
 ![Tecnologia](https://img.shields.io/badge/Tech-Vanilla_JS-yellow)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
+![License](https://img.shields.io/github/license/andreluizfrancabatista/simulador_monte_carlo?cacheSeconds=60)
+
+![GitHub issues](https://img.shields.io/github/issues/andreluizfrancabatista/simulador_monte_carlo?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/andreluizfrancabatista/simulador_monte_carlo?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/andreluizfrancabatista/simulador_monte_carlo?style=flat-square)
+![Maintenance](https://img.shields.io/badge/maintained-yes-green?style=flat-square)
 
 ![Preview1](preview1.png)
 ![Preview2](preview2.png)
